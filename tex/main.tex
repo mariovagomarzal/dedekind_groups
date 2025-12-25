@@ -30,22 +30,124 @@
 
   Uno de los conceptos centrales en la teoría de grupos es el de subgrupo
   normal. Los subgrupos normales son aquellos que permanecen invariantes bajo
-  conjugación por elementos del grupo. Esta propiedad es crucial para la
-  construcción de grupos cociente y para el estudio de la estructura interna de
-  los grupos.
+  conjugación por elementos del grupo, es decir, subgrupos $H$ de un grupo $G$
+  tales que $gHg^{-1} = H$ para todo $g \in G$. Esta propiedad es fundamental
+  tanto para la construcción de grupos cociente como para el análisis de la
+  estructura interna de los grupos.
 
-  Dada la importancia de los subgrupos normales, es natural preguntarse qué
-  podemos decir sobre los grupos en los que todos sus subgrupos son normales.
-  Estos grupos son precisamente los \emph{grupos de Dedekind}.
+  Dada la importancia de los subgrupos normales en la teoría de grupos, es
+  natural preguntarse qué ocurre en el caso en el que \emph{todos} los subgrupos
+  de un grupo son normales. Estos grupos, conocidos como \emph{grupos de
+  Dedekind}, poseen una estructura muy particular que ha sido objeto de estudio
+  desde finales del siglo XIX.
 
-  El matemático alemán Richard Dedekind (1831--1916) estudió estos grupos en
-  \cite{Dedekind1897} por primera vez, demostrando la versión finita del teorema
-  de carecterización que veremos más adelante. Sería Reinhold Baer quien en
-  \cite{Baer1933} generalizaría este resultado al caso infinito.
+  El matemático alemán Richard Dedekind (1831--1916) fue el primero en estudiar
+  sistemáticamente estos grupos en su trabajo de 1897 \cite{Dedekind1897}, donde
+  demostró un resultado de caracterización completa para el caso finito.
+  Posteriormente, Reinhold Baer extendió este teorema fundamental al caso
+  infinito en \cite{Baer1933}, proporcionando una descripción completa de todos
+  los grupos de Dedekind.
 
-  \section{Definiciones básicas, ejemplos y propiedades}
+  En este trabajo presentaremos la teoría básica de los grupos de Dedekind,
+  estudiaremos sus propiedades fundamentales y ejemplos clásicos, y esbozaremos
+  una prueba del teorema de caracterización. Finalmente, complementaremos el
+  estudio teórico con una exploración computacional utilizando el sistema de
+  álgebra computacional GAP a través de su interfaz de Python \textit{gappy}.
+
+  \section{Definiciones básicas y ejemplos}
+
+  \subsection{Definición de grupo de Dedekind y el caso abeliano}
+
+  Empecemos por definir formalmente el concepto central de este trabajo.
+
+  \begin{definition}[Grupo de Dedekind]
+    Un \emph{grupo de Dedekind} es un grupo en el que todos sus subgrupos son
+    normales, esto es, un grupo $G$ tal que para todo subgrupo $H \leq G$ se
+    cumple que $H \trianglelefteq G$.
+  \end{definition}
+
+  El primer ejemplo de grupos de Dedekind que surge naturalmente es el de los
+  grupos abelianos. En efecto, si $G$ es abeliano y $H \leq G$, entonces para
+  cualesquiera $h \in H$ y $g \in G$ se tiene que
+  \[
+    ghg^{-1} = gg^{-1}h = h \in H,
+  \]
+  por lo que $gHg^{-1} = H$ y, por tanto, $H \trianglelefteq G$. Así pues, todo
+  grupo abeliano es un grupo de Dedekind.
+
+  La pregunta natural que surge inmediatamente es si el recíproco es cierto, es
+  decir, si todo grupo de Dedekind debe ser necesariamente abeliano. Como
+  veremos a contunuación, la respuesta es negativa.
+
+  \subsection{Grupos de Dedekind no abelianos}
+
+  Como acabamos de anticipar, los grupos abelianos no son los únicos grupos de
+  Dedekind.
+
+  \begin{definition}
+    Un \emph{grupo hamiltoniano} es un grupo de Dedekind no abeliano.
+  \end{definition}
+
+  El ejemplo clásico de esta situación es el grupo de cuaterniones $Q_8$,
+  descubierto precisamente por Hamilton en su estudio de extensiones de los
+  números complejos.
+
+  \begin{example}[El grupo de cuaterniones]
+    El \emph{grupo de cuaterniones} $Q_8$ está definido como
+    \[
+      Q_8 = \set{\pm 1, \pm i, \pm j, \pm k}
+    \]
+    con la operación de multiplicación de cuaterniones. Las reglas de
+    multiplicación vienen determinadas por las relaciones fundamentales
+    \[
+      i^2 = j^2 = k^2 = ijk = -1,
+    \]
+    de las cuales se derivan todas las demás multiplicaciones.
+
+    Es inmediato verificar que $Q_8$ no es abeliano: basta observar que
+    $ij = k$ mientras que $ji = -k$. Sin embargo, mostraremos que todos sus
+    subgrupos son normales, por lo que $Q_8$ es efectivamente hamiltoniano.
+    
+    Los subgrupos de $Q_8$ son:
+    \begin{itemize}
+      \item El subgrupo trivial $\set{1}$.
+      \item El subgrupo $\set{\pm 1}$, que coincide con el centro $Z(Q_8)$.
+      \item Los subgrupos cíclicos generados por cada uno de los elementos de
+        orden 4:
+        \[
+          \langle i \rangle = \set{\pm 1, \pm i}, \quad
+          \langle j \rangle = \set{\pm 1, \pm j}, \quad
+          \langle k \rangle = \set{\pm 1, \pm k}.
+        \]
+      \item El grupo completo $Q_8$.
+    \end{itemize}
+
+    Verificamos ahora que todos estos subgrupos son normales. Los casos
+    triviales ($\set{1}$ y $Q_8$) son evidentes. Para el subgrupo $\set{\pm 1}$,
+    observamos que al ser el centro, es normal. Para los subgrupos de orden 4,
+    notemos que tienen índice 2 en $Q_8$ y, por tanto, son automáticamente
+    normales (todo subgrupo de índice 2 es normal). Alternativamente, podemos
+    verificar directamente que para cualquier $g \in Q_8$ y cualquiera de
+    estos subgrupos, digamos $\langle i \rangle$, se cumple
+    \[
+      g \langle i \rangle g^{-1} = \langle i \rangle,
+    \]
+    ya que la conjugación permuta los elementos $\set{\pm i}$ dentro del mismo
+    subgrupo.
+    
+    Por lo tanto, $Q_8$ es un grupo de Dedekind no abeliano, es decir, un
+    grupo hamiltoniano.
+  \end{example}
 
   \section{Caracterización de los grupos de Dedekind}
+
+  \subsection{Propiedades fundamentales}
+
+  % TODO: Añadir las propiedades necesarias.
+
+  \subsection{Teorema de caracterización de Dedekind-Baer}
+
+  % TODO: Enunciar y esbozar la prueba del teorema de Dedekind-Baer.
 
   \section{Exploración computacional con GAP}
 
