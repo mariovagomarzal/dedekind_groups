@@ -1,0 +1,54 @@
+\documentclass[a4paper, 11pt]{article}
+
+\input{preamble.tex}
+\input{macros.tex}
+
+\title{Grupos de Dedekind}
+\author{
+  Laura González Ferrándiz \and Carles Pellicer Suárez \and
+  Mario Vago Marzal \and Álvaro Ybarra Seresola
+}
+\date{Curso 2025--2026}
+
+\begin{document}
+  \maketitle
+
+  \begin{abstract}
+    En este trabajo se presenta el concepto de grupo de Dedekind, se estudian
+    algunas de sus propiedades y algunos ejemplos relevantes. Además, se discute
+    el resultado fundamental que caracteriza a los grupos de Dedekind.
+    Finalmente, haremos una breve exploración computacional utilizando GAP
+    via \textit{gappy}, una interfaz de Python para GAP.
+  \end{abstract}
+
+  {
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+  }
+
+  \section{Introducción}
+
+  Uno de los conceptos centrales en la teoría de grupos es el de subgrupo
+  normal. Los subgrupos normales son aquellos que permanecen invariantes bajo
+  conjugación por elementos del grupo. Esta propiedad es crucial para la
+  construcción de grupos cociente y para el estudio de la estructura interna de
+  los grupos.
+
+  Dada la importancia de los subgrupos normales, es natural preguntarse qué
+  podemos decir sobre los grupos en los que todos sus subgrupos son normales.
+  Estos grupos son precisamente los \emph{grupos de Dedekind}.
+
+  El matemático alemán Richard Dedekind (1831--1916) estudió estos grupos en
+  \cite{Dedekind1897} por primera vez, demostrando la versión finita del teorema
+  de carecterización que veremos más adelante. Sería Reinhold Baer quien en
+  \cite{Baer1933} generalizaría este resultado al caso infinito.
+
+  \section{Definiciones básicas, ejemplos y propiedades}
+
+  \section{Caracterización de los grupos de Dedekind}
+
+  \section{Exploración computacional con GAP}
+
+  \bibliographystyle{unsrt}
+  \bibliography{references}
+\end{document}
