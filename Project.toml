@@ -1,0 +1,4 @@
+name = "Dedekind"
+
+[deps]
+GAP = "c863536a-3901-11e9-33e7-d5cd0df7b904"
