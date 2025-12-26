@@ -48,8 +48,8 @@
   los grupos de Dedekind.
 
   En este trabajo presentaremos la teoría básica de los grupos de Dedekind,
-  estudiaremos sus propiedades fundamentales y ejemplos clásicos, y esbozaremos
-  una prueba del teorema de caracterización. Finalmente, complementaremos el
+  estudiaremos algunas propiedades fundamentales y ejemplos clásicos, y
+  enunciaremos su teorema de caracterización. Finalmente, complementaremos el
   estudio teórico con una exploración computacional utilizando el sistema de
   álgebra computacional GAP.
 
@@ -76,7 +76,7 @@
 
   La pregunta natural que surge inmediatamente es si el recíproco es cierto, es
   decir, si todo grupo de Dedekind debe ser necesariamente abeliano. Como
-  veremos a contunuación, la respuesta es negativa.
+  veremos a continuación, la respuesta es negativa.
 
   \subsection{Grupos de Dedekind no abelianos}
 
@@ -142,11 +142,92 @@
 
   \subsection{Propiedades fundamentales}
 
-  % TODO: Añadir las propiedades necesarias.
+  En esta sección estableceremos las propiedades clave que caracterizan a los
+  grupos de Dedekind y que serán fundamentales para entender su clasificación
+  completa. Comenzaremos con resultados sobre subgrupos cíclicos, para luego
+  estudiar el conmutador y el centro.
+
+  \begin{lemma}\label{lem:cyclic-normal}
+    Sea $G$ un grupo de Dedekind. Entonces todo subgrupo cíclico de $G$ es
+    normal.
+  \end{lemma}
+
+  Este resultado, aunque trivial, es de gran importancia. En efecto, la
+  condición de que todos los subgrupos cíclicos sean normales es equivalente a
+  que todos los subgrupos sean normales, como muestra el siguiente resultado.
+
+  \begin{proposition}\label{prop:cyclic-characterization}
+    Un grupo $G$ es de Dedekind si y solo si todo subgrupo cíclico de $G$ es
+    normal.
+  \end{proposition}
+
+  \begin{proof}
+    La implicación directa es el lema anterior. Para el recíproco, supongamos
+    que todo subgrupo cíclico de $G$ es normal y sea $H$ un subgrupo
+    cualquiera de $G$. Debemos mostrar que $H \trianglelefteq G$.
+
+    Sea $g \in G$ y $h \in H$ arbitrarios. Como $\langle h \rangle$ es un
+    subgrupo cíclico de $G$, por hipótesis es normal. Por tanto,
+    \[
+      ghg^{-1} \in g \langle h \rangle g^{-1} = \langle h \rangle \subseteq H.
+    \]
+    Esto demuestra que $gHg^{-1} \subseteq H$ para todo $g \in G$. Por tanto,
+    $gHg^{-1} = H$ y $H$ es normal.
+  \end{proof}
+
+  % TODO: Añadir más propiedades.
 
   \subsection{Teorema de caracterización de Dedekind-Baer}
 
-  % TODO: Enunciar y esbozar la prueba del teorema de Dedekind-Baer.
+  El resultado fundamental sobre grupos de Dedekind es el teorema de
+  caracterización completa demostrado por Dedekind para el caso finito y
+  extendido al caso general por Baer. Este teorema describe exactamente qué
+  forma tienen todos los grupos de Dedekind.
+
+  \begin{theorem}[Dedekind-Baer]\label{thm:dedekind-baer}
+    Un grupo $G$ es de Dedekind si y solo si $G$ es abeliano o bien $G$ es
+    isomorfo a un producto directo
+    \[
+      G \cong Q_8 \times A \times B,
+    \]
+    donde:
+    \begin{itemize}
+      \item $Q_8$ es el grupo de cuaterniones,
+      \item $A$ es un 2-grupo abeliano elemental (es decir, $A \cong
+        (\mathbb{Z}/2\mathbb{Z})^n$ para algún $n \geq 0$, posiblemente $n = 0$
+        en cuyo caso $A = \{1\}$),
+      \item $B$ es un grupo abeliano periódico en el que todos los elementos
+        tienen orden impar (es decir, $B$ no tiene elementos de orden 2 excepto
+        la identidad).
+    \end{itemize}
+  \end{theorem}
+
+  Este teorema afirma que los únicos grupos de Dedekind no abelianos
+  (hamiltonianos) son productos directos que contienen necesariamente una copia
+  de $Q_8$ junto con dos grupos abelianos auxiliares: uno formado solo por
+  elementos de orden 2, y otro sin elementos de orden 2.
+
+  \begin{example}[Grupos hamiltonianos finitos pequeños]
+    Veamos algunos ejemplos concretos de grupos hamiltonianos finitos:
+    \begin{itemize}
+      \item $G = Q_8$: Tomando $A = B = \{1\}$ recuperamos el grupo de
+        cuaterniones, que es el grupo hamiltoniano finito más pequeño.
+      \item $G = Q_8 \times \mathbb{Z}/2\mathbb{Z}$: Tomando $A =
+        \mathbb{Z}/2\mathbb{Z}$ y $B = \{1\}$ obtenemos un grupo hamiltoniano de
+        orden 16.
+      \item $G = Q_8 \times \mathbb{Z}/3\mathbb{Z}$: Tomando $A = \{1\}$ y $B =
+        \mathbb{Z}/3\mathbb{Z}$ obtenemos un grupo hamiltoniano de orden 24.
+      \item $G = Q_8 \times (\mathbb{Z}/2\mathbb{Z})^2 \times
+        \mathbb{Z}/3\mathbb{Z}$: Un grupo hamiltoniano de orden $8 \times 4
+        \times 3 = 96$.
+    \end{itemize}
+  \end{example}
+
+  El teorema de Dedekind-Baer es notable porque proporciona una clasificación
+  completa y constructiva de todos los grupos de Dedekind. Mientras que los
+  grupos abelianos admiten una clasificación (a través de la teoría de grupos
+  abelianos finitos y el teorema de estructura), los grupos hamiltonianos tienen
+  una forma muy específica que involucra necesariamente al grupo $Q_8$.
 
   \section{Exploración computacional con GAP}
 
