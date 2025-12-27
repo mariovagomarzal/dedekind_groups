@@ -191,8 +191,24 @@ function generate_latex_report(G, name::String; label::String="")
         label = replace(lowercase(name), r"[^a-z0-9]" => "")
     end
 
-    # Convert boolean values to Spanish.
-    to_spanish_bool(b::Bool) = b ? "Sí" : "No"
+    # Convert boolean values to Spanish with colored backgrounds.
+    to_spanish_bool(b::Bool) = b ? "\\cellcolor{ForestGreen!20}Sí" : "\\cellcolor{FireBrick!20}No"
+
+    # Pretty-print group structure descriptions for LaTeX.
+    # Converts GAP format (e.g., "C2 x Q8") to LaTeX format (e.g., "$C_2 \times Q_8$")
+    function pretty_print_structure(structure::String)
+        # Replace 'x' with LaTeX times symbol
+        result = replace(structure, " x " => " \\times ")
+
+        # Replace C followed by digits with C_digits (cyclic groups)
+        result = replace(result, r"C(\d+)" => s"C_{\1}")
+
+        # Replace Q followed by digits with Q_digits (quaternion groups)
+        result = replace(result, r"Q(\d+)" => s"Q_{\1}")
+
+        # Wrap in math mode
+        return "\$$result\$"
+    end
 
     # Build the LaTeX table.
     latex_lines = String[]
@@ -201,21 +217,21 @@ function generate_latex_report(G, name::String; label::String="")
     push!(latex_lines, "\\centering")
     push!(latex_lines, "\\caption{Análisis de $name}")
     push!(latex_lines, "\\label{tab:$label}")
-    push!(latex_lines, "\\begin{tabular}{ll}")
+    push!(latex_lines, "\\begin{tabular}{lc}")
     push!(latex_lines, "\\toprule")
     push!(latex_lines, "Propiedad & Valor \\\\")
     push!(latex_lines, "\\midrule")
     push!(latex_lines, "Orden & $order \\\\")
-    push!(latex_lines, "Estructura & $structure \\\\")
+    push!(latex_lines, "Estructura & $(pretty_print_structure(structure)) \\\\")
     push!(latex_lines, "Abeliano & $(to_spanish_bool(is_ab)) \\\\")
     push!(latex_lines, "Dedekind & $(to_spanish_bool(is_ded)) \\\\")
     push!(latex_lines, "Hamiltoniano & $(to_spanish_bool(is_ham)) \\\\")
     push!(latex_lines, "Número de subgrupos & $num_subgroups \\\\")
     push!(latex_lines, "Subgrupos normales & $normal_count / $num_subgroups \\\\")
     push!(latex_lines, "Centro - Orden & $center_order \\\\")
-    push!(latex_lines, "Centro - Estructura & $center_structure \\\\")
+    push!(latex_lines, "Centro - Estructura & $(pretty_print_structure(center_structure)) \\\\")
     push!(latex_lines, "Subgrupo conmutador - Orden & $commutator_order \\\\")
-    push!(latex_lines, "Subgrupo conmutador - Estructura & $commutator_structure \\\\")
+    push!(latex_lines, "Subgrupo conmutador - Estructura & $(pretty_print_structure(commutator_structure)) \\\\")
     push!(latex_lines, "Clase de nilpotencia & $nilpotency_class \\\\")
     push!(latex_lines, "Longitud derivada & $derived_length \\\\")
     push!(latex_lines, "Exponente & $exponent \\\\")
