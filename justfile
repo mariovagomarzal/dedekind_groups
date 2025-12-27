@@ -9,3 +9,6 @@ tex:
 
 clean-tex:
     cd {{tex-dir}} && latexmk -C main.tex
+
+experiment NAME:
+    julia --project=. src/experiments/{{NAME}}.jl
