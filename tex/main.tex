@@ -175,7 +175,20 @@
     $gHg^{-1} = H$ y $H$ es normal.
   \end{proof}
 
-  % TODO: Añadir más propiedades.
+  A continuación presentamos algunas propiedades adicionales de los grupos de
+  Dedekind que resultan fundamentales para comprender su estructura. Estas
+  propiedades serán verificadas computacionalmente en la sección~4.
+
+  \begin{proposition}[Nilpotencia]\label{prop:nilpotency}
+    Todo grupo de Dedekind es nilpotente. Más aún, los grupos hamiltonianos
+    tienen clase de nilpotencia exactamente 2.
+  \end{proposition}
+
+  \begin{proposition}[Resolubilidad]\label{prop:solvability}
+    Todo grupo de Dedekind es resoluble. Los grupos de Dedekind abelianos
+    tienen longitud derivada 1, mientras que los grupos hamiltonianos tienen
+    longitud derivada 2.
+  \end{proposition}
 
   \subsection{Teorema de caracterización de Dedekind-Baer}
 
@@ -229,6 +242,21 @@
   abelianos finitos y el teorema de estructura), los grupos hamiltonianos tienen
   una forma muy específica que involucra necesariamente al grupo $Q_8$.
 
+  Como consecuencia directa del teorema de caracterización, podemos determinar
+  la estructura del subgrupo conmutador y del centro de cualquier grupo
+  hamiltoniano:
+
+  \begin{proposition}[Subgrupo conmutador]\label{prop:commutator}
+    El subgrupo conmutador de un grupo hamiltoniano es $G' = \{\pm 1\}$, donde
+    $\{\pm 1\}$ es el centro de $Q_8$. En particular, $|G'| = 2$.
+  \end{proposition}
+
+  \begin{proposition}[Estructura del centro]\label{prop:center}
+    El centro de un grupo hamiltoniano de la forma del
+    Teorema~\ref{thm:dedekind-baer} es $Z(G) = \{\pm 1\} \times A \times B$,
+    donde $\{\pm 1\}$ es el centro de $Q_8$.
+  \end{proposition}
+
   \section{Exploración computacional con GAP}
 
   Para complementar el estudio teórico de los grupos de Dedekind, hemos
@@ -278,7 +306,7 @@
   \end{listing}
 
   Finalmente, para construir productos directos de grupos (como los del
-  Ejemplo~3.1), utilizamos la siguiente función:
+  Ejemplo~\ref{ex:hamiltonian-finite}), utilizamos la siguiente función:
 
   \begin{listing}[H]
   \inputminted[firstline=81,lastline=84]{julia}{../src/DedekindGroups.jl}
@@ -288,11 +316,12 @@
   \subsection{Resultados}
 
   A continuación se presentan los resultados del análisis computacional de los
-  grupos hamiltonianos del Ejemplo~3.1 en las
+  grupos hamiltonianos del Ejemplo~\ref{ex:hamiltonian-finite} en las
   Tablas~\ref{tab:q8}--\ref{tab:q8z2z2z3}. Para cada grupo, se muestran sus
   propiedades fundamentales: orden, estructura, clasificación (abeliano,
-  Dedekind, hamiltoniano), información sobre subgrupos, centro y subgrupo
-  conmutador.
+  Dedekind, hamiltoniano), información sobre subgrupos, centro, subgrupo
+  conmutador, y las propiedades adicionales estudiadas en la sección anterior
+  (clase de nilpotencia, longitud derivada, exponente e índice del centro).
 
   \input{tables/q8.tex}
 
@@ -304,9 +333,42 @@
 
   Los resultados confirman que todos estos grupos son efectivamente
   hamiltonianos: son grupos de Dedekind (todos sus subgrupos son normales) pero
-  no son abelianos. Además, podemos observar patrones interesantes en sus
-  estructuras, como el crecimiento del orden del centro en los productos
-  directos y la invariancia del orden del subgrupo conmutador.
+  no son abelianos. Además, verifican computacionalmente las propiedades
+  teóricas enunciadas en las Proposiciones~\ref{prop:nilpotency}--\ref{prop:center}:
+
+  \begin{itemize}
+    \item \textbf{Nilpotencia}: Todos los ejemplos tienen clase de nilpotencia
+      2, confirmando que los grupos hamiltonianos son nilpotentes de clase
+      exactamente 2.
+
+    \item \textbf{Resolubilidad}: Todos los ejemplos tienen longitud derivada
+      2, verificando que los grupos hamiltonianos son resolubles pero no
+      abelianos.
+
+    \item \textbf{Subgrupo conmutador}: El orden del subgrupo conmutador es
+      invariantemente 2 en todos los casos, confirmando la
+      Proposición~\ref{prop:commutator}. La estructura del subgrupo conmutador
+      es siempre $C_2$ (el grupo cíclico de orden 2), correspondiente a
+      $\{\pm 1\}$ en $Q_8$.
+
+    \item \textbf{Centro}: El orden del centro crece según el patrón predicho
+      por la Proposición~\ref{prop:center}. En efecto, observamos que
+      $|Z(Q_8)| = 2$, $|Z(Q_8 \times \mathbb{Z}/2\mathbb{Z})| = 4$,
+      $|Z(Q_8 \times \mathbb{Z}/3\mathbb{Z})| = 6$, y
+      $|Z(Q_8 \times (\mathbb{Z}/2\mathbb{Z})^2 \times \mathbb{Z}/3\mathbb{Z})| = 24 = 2 \times 4 \times 3$,
+      confirmando que $Z(G) = \{\pm 1\} \times A \times B$.
+
+    \item \textbf{Exponente}: El exponente de cada grupo es el mínimo común
+      múltiplo de los exponentes de los factores directos. Por ejemplo,
+      $Q_8 \times \mathbb{Z}/3\mathbb{Z}$ tiene exponente 12 (mcm de 4 y 3),
+      mientras que $Q_8 \times (\mathbb{Z}/2\mathbb{Z})^2 \times \mathbb{Z}/3\mathbb{Z}$
+      también tiene exponente 12 (mcm de 4, 2 y 3).
+
+    \item \textbf{Índice del centro}: El índice $[G:Z(G)]$ proporciona
+      información sobre qué tan ``alejado'' está el grupo de ser abeliano.
+      Para $Q_8$ el índice es 4, y este valor se mantiene o varía según la
+      estructura de los factores adicionales en el producto directo.
+  \end{itemize}
 
   \newpage
 

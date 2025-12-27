@@ -17,6 +17,7 @@ export is_dedekind, is_abelian, is_hamiltonian
 export construct_Q8, construct_cyclic, construct_direct_product
 export get_subgroups, get_center, get_commutator_subgroup
 export get_order, get_structure_description
+export get_nilpotency_class, get_derived_length, get_exponent, get_center_index
 
 # Classification functions.
 
@@ -128,6 +129,44 @@ Get a human-readable description of the group structure.
 """
 function get_structure_description(G)
     return GAP.gap_to_julia(String, GAP.Globals.StructureDescription(G))
+end
+
+"""
+    get_nilpotency_class(G) -> Int
+
+Get the nilpotency class of group G. Returns 0 if the group is not nilpotent.
+"""
+function get_nilpotency_class(G)
+    return GAP.Globals.NilpotencyClassOfGroup(G)
+end
+
+"""
+    get_derived_length(G) -> Int
+
+Get the derived length of group G (length of the derived series).
+Returns 0 if the group is not solvable.
+"""
+function get_derived_length(G)
+    return GAP.Globals.DerivedLength(G)
+end
+
+"""
+    get_exponent(G) -> Int
+
+Get the exponent of group G (smallest positive integer n such that g^n = e for all g ∈ G).
+Returns 0 if no such finite exponent exists.
+"""
+function get_exponent(G)
+    return GAP.Globals.Exponent(G)
+end
+
+"""
+    get_center_index(G) -> Int
+
+Get the index [G:Z(G)] of the center in group G.
+"""
+function get_center_index(G)
+    return get_order(G) ÷ get_order(get_center(G))
 end
 
 end # module DedekindGroups
