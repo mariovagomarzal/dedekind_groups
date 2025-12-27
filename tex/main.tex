@@ -238,7 +238,77 @@
   permiten verificar las propiedades de los ejemplos presentados anteriormente y
   otros y explorar sus estructuras internas.
 
-  % TODO: Añadir resultados de los experimentos computacionales.
+  \subsection{Metodología e implementación}
+
+  Para llevar a cabo el estudio computacional, hemos desarrollado un módulo en
+  Julia que proporciona funciones de alto nivel para trabajar con grupos de
+  Dedekind a través de GAP. Este módulo encapsula las operaciones fundamentales
+  necesarias para verificar propiedades de grupos, construir ejemplos
+  específicos y analizar sus estructuras. Las funciones implementadas permiten
+  verificar computacionalmente las propiedades teóricas estudiadas en las
+  secciones anteriores.
+
+  A continuación, presentamos algunas funciones a modo de ejemplo para ilustrar
+  el estilo general del código, comentadas para explicar su funcionamiento. La
+  implementación completa puede consultarse en el repositorio del proyecto en
+  \url{https://github.com/mariovagomarzal/dedekind_groups}.
+
+  La verificación computacional de la propiedad de Dedekind se implementa
+  comprobando que todos los subgrupos son normales:
+
+  \begin{listing}[H]
+  \inputminted[firstline=28,lastline=36]{julia}{../src/DedekindGroups.jl}
+  \caption{Verificación computacional de la propiedad de Dedekind}
+  \end{listing}
+
+  Para identificar grupos hamiltonianos, utilizamos directamente la definición
+  como grupos de Dedekind no abelianos:
+
+  \begin{listing}[H]
+  \inputminted[firstline=52,lastline=54]{julia}{../src/DedekindGroups.jl}
+  \caption{Verificación de grupos hamiltonianos}
+  \end{listing}
+
+  La construcción del grupo de cuaterniones $Q_8$ se realiza mediante la
+  función correspondiente de GAP:
+
+  \begin{listing}[H]
+  \inputminted[firstline=63,lastline=65]{julia}{../src/DedekindGroups.jl}
+  \caption{Construcción del grupo de cuaterniones $Q_8$}
+  \end{listing}
+
+  Finalmente, para construir productos directos de grupos (como los del
+  Ejemplo~3.1), utilizamos la siguiente función:
+
+  \begin{listing}[H]
+  \inputminted[firstline=81,lastline=84]{julia}{../src/DedekindGroups.jl}
+  \caption{Construcción de productos directos}
+  \end{listing}
+
+  \subsection{Resultados}
+
+  A continuación se presentan los resultados del análisis computacional de los
+  grupos hamiltonianos del Ejemplo~3.1 en las
+  Tablas~\ref{tab:q8}--\ref{tab:q8z2z2z3}. Para cada grupo, se muestran sus
+  propiedades fundamentales: orden, estructura, clasificación (abeliano,
+  Dedekind, hamiltoniano), información sobre subgrupos, centro y subgrupo
+  conmutador.
+
+  \input{tables/q8.tex}
+
+  \input{tables/q8_z2.tex}
+
+  \input{tables/q8_z3.tex}
+
+  \input{tables/q8_z2z2_z3.tex}
+
+  Los resultados confirman que todos estos grupos son efectivamente
+  hamiltonianos: son grupos de Dedekind (todos sus subgrupos son normales) pero
+  no son abelianos. Además, podemos observar patrones interesantes en sus
+  estructuras, como el crecimiento del orden del centro en los productos
+  directos y la invariancia del orden del subgrupo conmutador.
+
+  \newpage
 
   \bibliographystyle{unsrt}
   \bibliography{references}

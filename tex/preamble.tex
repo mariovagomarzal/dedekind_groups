@@ -64,6 +64,21 @@
 \usepackage{minted}
 \renewcommand{\listingscaption}{Código}
 
+% Enhanced minted configuration
+\setminted{
+  breaklines=true,        % Auto-wrap long lines
+  fontsize=\small,        % Smaller font for code
+  linenos=true,           % Line numbers
+  frame=lines,            % Frame around code
+  numbersep=5pt,          % Space between numbers and code
+  style=friendly,         % Color scheme
+  bgcolor=black!3         % Very light background
+}
+
+\setminted[julia]{
+  mathescape=true,        % Allow math in comments
+}
+
 \usepackage{mathtools}
 \mathtoolsset{centercolon}
 
