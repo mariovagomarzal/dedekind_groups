@@ -37,15 +37,12 @@ jobs:
       - name: Install Just command runner
         uses: extractions/setup-just@v3
 
-      - name: Setup LaTeX
+      - name: Generate tables and build PDF
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: ""
-          work_in_root_file_dir: false
-          args: ""
-
-      - name: Generate tables and build PDF
-        run: just build
+          root_file: main.tex
+          working_directory: tex
+          pre_compile: just generate-tables
 
       - name: Create deployment directory
         run: |
