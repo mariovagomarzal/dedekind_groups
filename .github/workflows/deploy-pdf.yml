@@ -11,8 +11,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -37,12 +37,14 @@ jobs:
       - name: Install Just command runner
         uses: extractions/setup-just@v3
 
-      - name: Generate tables and build PDF
+      - name: Generate tables
+        run: just generate-tables
+
+      - name: Build PDF
         uses: xu-cheng/latex-action@v4
         with:
           root_file: main.tex
           working_directory: tex
-          pre_compile: just generate-tables
 
       - name: Create deployment directory
         run: |
